@@ -4,12 +4,16 @@ certifi==2024.2.2
 charset-normalizer==3.3.2
 defusedxml==0.7.1
 Deprecated==1.2.14
+docutils==0.21.2
 idna==3.7
 jira==3.8.0
 jmespath==1.0.1
+markdown2==2.4.13
 oauthlib==3.2.2
 packaging==24.0
 pillow==10.3.0
+plantweb==1.2.1
+python-dotenv==1.0.1
 python-gitlab==4.4.0
 requests==2.31.0
 requests-oauthlib==2.0.0
