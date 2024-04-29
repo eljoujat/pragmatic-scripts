@@ -1,0 +1,91 @@
+@startuml
+
+package "LPEL"  {
+
+package "E-eservice" {
+' ####      Objets Pour Bundle e-Lettre Rouge
+
+together {
+object CELbundleTemplatesPackage_1 #d4f7dd
+
+object "CEL Bundle Component Postage Lettre recommende : CELbundleTemplatesComponent" as CELbundleTemplatesCompPostage_eL_1 #d4f7dd{
+    family: CEL
+    type : POSTAGE_COMPONENT
+}
+object "CEL_Postage_e_Lettre : CELPostageProduct" as CELPostageProduct_3 #FFF0B4 {
+    code: eL_ZC_FM_ZC_FM_1_3
+    expZone: FM
+    destZone: FM
+    range: [1-3]
+    price: 1.49
+    offer: E_LETTRE
+}
+
+object "CEL_Postage_e_Lettre : CELPostageProduct" as CELPostageProduct_4 #FFF0B4 {
+    code: eL_ZC_FM_ZC_FM_4_7
+    expZone: FM
+    destZone: FM
+    range:[4-7]
+    price: 3.10
+    offer:E_LETTRE
+}
+
+object "CEL Bundle Component Print : CELbundleTemplatesComponent" as CELbundleTemplatesCompColor_el_1 #d4f7dd{
+    family: CEL
+    type : PRINT_COMPONENT
+}
+
+
+object "Option Impression : CELOptionProduct" as CELOptionProduct_Color_el_1 #D9E8F3{
+   label: Option Couleur
+   type : PRINT
+   range:[1-3]
+   price: 0.30
+}
+
+object "Option Impression : CELOptionProduct" as CELOptionProduct_Color_el_2 #D9E8F3{
+  label: Option Couleur
+   type : PRINT
+   range:[4-7]
+   price: 0.80
+}
+
+
+object "CEL Bundle Component SUIVI : CELbundleTemplatesComponent" as CELbundleTemplatesCompSuivi_1 #d4f7dd{
+    family: CEL
+    type : SUIVI
+}
+
+object "Option Suivi : CELOptionProduct" as CELOptionProduct_SUIVI_1 #D9E8F3{
+   label: Option Suivi
+   type : SUIVI
+   price: 0.50
+}
+}
+
+
+
+
+CELbundleTemplatesCompPostage_eL_1 o--CELPostageProduct_3
+CELbundleTemplatesCompPostage_eL_1 o--CELPostageProduct_4
+CELbundleTemplatesCompColor_el_1 o-- CELOptionProduct_Color_el_1
+CELbundleTemplatesCompColor_el_1 o-- CELOptionProduct_Color_el_2
+CELbundleTemplatesCompSuivi_1 o-- CELOptionProduct_SUIVI_1
+
+CELbundleTemplatesPackage_1 "Parent"*-- "childTemplates" CELbundleTemplatesCompPostage_eL_1
+CELbundleTemplatesPackage_1 "Parent"*-- "childTemplates" CELbundleTemplatesCompColor_el_1
+CELbundleTemplatesPackage_1 "Parent"*-- "childTemplates" CELbundleTemplatesCompSuivi_1
+
+}
+}
+
+
+legend left
+    |Color | Module |
+    |<#D9E8F3>| Options|
+    |<#FFF0B4>| Affranchissement |
+    |<#d4f7dd>| Bundle Templates |
+endlegend
+
+
+@enduml

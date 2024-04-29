@@ -1,0 +1,105 @@
+@startuml
+
+package "SAP"  {
+ class Product #D9E8F3 {
+    code : String
+ }
+
+ class BundleTemplate #D9E8F3 {
+    id : String
+    catalogVersion : CatalogVersion
+    version : String
+    products : Product
+    childTemplates : BundleTemplate
+ }
+
+ BundleTemplate "Parent"*-- "childTemplates 0..*" BundleTemplate
+ BundleTemplate o-- "0..O"Product
+
+}
+
+
+package "LPEL"  {
+
+package "E-eservice" {
+
+enum  EserviceBundleTemplateFamily #FFF0B4 {
+    COLIS
+    MTEL
+    REEX
+    CEL
+}
+
+note bottom: Enumeration pour distinguer entre les differents type de bundles e-services
+
+enum  EserviceBundleTemplateType #FFF0B4{
+    BUNDLEPACKAGE
+    BUNDLEPOSTAGECOMPONENT
+    BUNDLEPRINTCOMPONENT
+    BUNDLESUIVICOMPONENT
+}
+
+note bottom of EserviceBundleTemplateType  
+Les Bundle Templates parent auront un type package.
+Les Composant du bundle peuvent être de type, postage, color, AR ou suivi
+les childs auront un type components
+end note
+
+Enum CELOptionType #d4f7dd {
+   +AR
+   +PRINT
+   +SUIVI
+}
+
+ class AbstractEserviceProduct #FFF0B4 {
+     cabestanCode : String
+ }
+
+class AbstractEservicePostageProduct #FFF0B4 {
+    + expZone: Zone
+    + destZone: Zone
+}
+
+class CELPostageProduct #d4f7dd{
+     + range: EserviceSheetsRange
+
+}
+
+class CELOptionProduct  #d4f7dd {
+    + label
+    + type:CELOptionTypeEnum
+    + range: EserviceSheetsRange
+}
+
+class EserviceBundleTemplate #FFF0B4 {
+
+    family : EserviceBundleTemplateFamily
+    type : EserviceBundleTemplateType
+}
+
+}
+}
+
+
+Product <|-- AbstractEserviceProduct
+AbstractEserviceProduct <|-- CELOptionProduct
+AbstractEservicePostageProduct <|-- CELPostageProduct
+AbstractEserviceProduct <|-- AbstractEservicePostageProduct
+
+BundleTemplate <|--EserviceBundleTemplate
+EserviceBundleTemplate o--EserviceBundleTemplateType
+EserviceBundleTemplate o--EserviceBundleTemplateFamily
+EserviceBundleTemplate o-- "0..O"AbstractEservicePostageProduct
+
+CELOptionProduct o--CELOptionType
+
+
+legend left
+    |Color | Module |
+    |<#D9E8F3>| Natif SAP|
+    |<#FFF0B4>| E-services|
+    |<#d4f7dd>| Offres CEL |
+endlegend
+
+
+@enduml
